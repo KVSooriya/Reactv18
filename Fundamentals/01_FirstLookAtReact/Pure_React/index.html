@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello React!</title>
+  </head>
+  <body>
+    <!-- 1. Create a div with id of root which is a standard in react -->
+    <div id="root"></div>
+
+    <!-- 2. Adding React library as a script (url from react official documentation). Usually when we write React, we do not do this. But instead
+     we use a modern build tool -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- 3. Creating our first component. It needs to be done inside a script because that is also a Javascript -->
+    <script>
+      function App() {
+        /* From this function, we can return whatever we want to see on the UI. JSX is not going to work here because we dont have the tooling 
+      that can convert JSX back to Javascript. And so here we need to use the createElement function */
+
+        // const time = new Date().toLocaleTimeString();
+
+        const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+        React.useEffect(function () {
+          /* setInterval is the Javascript function which accepts function as an argument and 1000 is the milliseconds ie. interval for the 
+          function to be executed */
+          setInterval(function () {
+            setTime(new Date().toLocaleTimeString());
+          }, 1000);
+        }, []);
+
+        return React.createElement("header", null, `Hello React! It's ${time}`); // We created a header element
+      }
+
+      /* 4. Rendering the component on DOM */
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(React.createElement(App));
+    </script>
+  </body>
+</html>
